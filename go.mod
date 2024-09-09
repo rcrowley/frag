@@ -1,6 +1,6 @@
 module github.com/rcrowley/frag
 
-go 1.22.5
+go 1.23
 
 require (
 	github.com/rcrowley/mergician v0.0.0-20240708043836-fc53b110098e
