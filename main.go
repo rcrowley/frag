@@ -17,10 +17,12 @@ func init() {
 
 func main() {
 	document := flag.Bool("d", false, "wrap the fragment in a complete HTML document")
+	inner := flag.Bool("i", false, "unwrap the fragment to leave only its inner HTML")
 	output := flag.String("o", "-", "write to this file instead of standard output")
 	flag.Usage = func() {
-		fmt.Fprint(os.Stderr, `Usage: frag [-d] [-o <output>] <tag> <input>
-  -d           wrap the fragment in a complete HTML document")
+		fmt.Fprint(os.Stderr, `Usage: frag [-d|-i] [-o <output>] <tag> <input>
+  -d           wrap the fragment in a complete HTML document
+  -i           unwrap the fragment to leave only its inner HTML
   -o <output>  write to this file instead of standard output
   <tag>        tag (optionally with attributes) at the root of the fragment to extract
   <input>      pathname to an input HTML file
@@ -28,9 +30,18 @@ func main() {
 	}
 	flag.Parse()
 
-	if flag.NArg() != 2 {
+	if *document && *inner || flag.NArg() != 2 {
 		flag.Usage()
 		os.Exit(1)
+	}
+
+	var w io.Writer
+	if *output == "-" {
+		w = os.Stdout
+	} else {
+		f := must2(os.Create(*output))
+		defer f.Close()
+		w = f
 	}
 
 	in := must2(html.ParseFile(flag.Arg(1)))
@@ -42,18 +53,16 @@ func main() {
 		log.Fatalf("%s not found", flag.Arg(0))
 	}
 	if *document {
-		out = wrap(out)
-	}
-
-	var w io.Writer
-	if *output == "-" {
-		w = os.Stdout
+		must(html.Render(w, wrap(out)))
+	} else if *inner {
+		for n := out.FirstChild; n != nil; n = n.NextSibling {
+			if (n != out.FirstChild && n != out.LastChild) || !html.IsWhitespace(n) { // strip leading/trailing whitespace
+				must(html.Render(w, n))
+			}
+		}
 	} else {
-		f := must2(os.Create(*output))
-		defer f.Close()
-		w = f
+		must(html.Render(w, out))
 	}
-	must(html.Render(w, out))
 
 	// Fragments rooted in an element (as opposed to bare text nodes) can't
 	// end with a trailing newline so we add one because we are a well-
