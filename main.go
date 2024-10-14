@@ -25,11 +25,10 @@ func main() {
   -i           unwrap the fragment to leave only its inner HTML
   -o <output>  write to this file instead of standard output
   <tag>        tag (optionally with attributes) at the root of the fragment to extract
-  <input>      pathname to an input HTML file
+  <input>      input HTML file
 `)
 	}
 	flag.Parse()
-
 	if *document && *inner || flag.NArg() != 2 {
 		flag.Usage()
 		os.Exit(1)
