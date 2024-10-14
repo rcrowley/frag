@@ -26,7 +26,7 @@ frag [-d|-i] [-o <output>] <tag> <input>
 See also
 --------
 
-Frag is part of the [Mergician](https://github.com/rcrowley/mergician) suite ot tools that manipulate HTML documents:
+Frag is part of the [Mergician](https://github.com/rcrowley/mergician) suite of tools that manipulate HTML documents:
 
 * [Deadlinks](https://github.com/rcrowley/deadlinks): Scan a document root directory for dead links
 * [Electrostatic](https://github.com/rcrowley/electrostatic): Mergician-powered, pure-HTML CMS
