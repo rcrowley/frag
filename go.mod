@@ -3,8 +3,11 @@ module github.com/rcrowley/frag
 go 1.23
 
 require (
-	github.com/rcrowley/mergician v0.0.0-20240708043836-fc53b110098e
-	golang.org/x/net v0.27.0
+	github.com/rcrowley/mergician v0.0.0-20241014060337-e6babab1ff1a
+	golang.org/x/net v0.30.0
 )
 
-require golang.org/x/exp v0.0.0-20240707233637-46b078467d37 // indirect
+require (
+	github.com/yuin/goldmark v1.7.8 // indirect
+	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c // indirect
+)
