@@ -11,15 +11,12 @@ import (
 	"golang.org/x/net/html/atom"
 )
 
-func init() {
-	log.SetFlags(0)
-}
-
-func main() {
-	document := flag.Bool("d", false, "wrap the fragment in a complete HTML document")
-	inner := flag.Bool("i", false, "unwrap the fragment to leave only its inner HTML")
-	output := flag.String("o", "-", "write to this file instead of standard output")
-	flag.Usage = func() {
+func Main(args []string, stdin io.Reader, stdout io.Writer) {
+	flags := flag.NewFlagSet(args[0], flag.ExitOnError)
+	document := flags.Bool("d", false, "wrap the fragment in a complete HTML document")
+	inner := flags.Bool("i", false, "unwrap the fragment to leave only its inner HTML")
+	output := flags.String("o", "-", "write to this file instead of standard output")
+	flags.Usage = func() {
 		fmt.Fprint(os.Stderr, `Usage: frag [-d|-i] [-o <output>] <tag> <input>
   -d           wrap the fragment in a complete HTML document
   -i           unwrap the fragment to leave only its inner HTML
@@ -28,28 +25,28 @@ func main() {
   <input>      input HTML file
 `)
 	}
-	flag.Parse()
-	if *document && *inner || flag.NArg() != 2 {
-		flag.Usage()
+	flags.Parse(args[1:])
+	if *document && *inner || flags.NArg() != 2 {
+		flags.Usage()
 		os.Exit(1)
 	}
 
 	var w io.Writer
 	if *output == "-" {
-		w = os.Stdout
+		w = stdout
 	} else {
 		f := must2(os.Create(*output))
 		defer f.Close()
 		w = f
 	}
 
-	in := must2(html.ParseFile(flag.Arg(1)))
+	in := must2(html.ParseFile(flags.Arg(1)))
 
-	tag := must2(html.ParseString(flag.Arg(0)))
+	tag := must2(html.ParseString(flags.Arg(0)))
 
 	out := html.Find(in, html.Match(tag))
 	if out == nil {
-		log.Fatalf("%s not found", flag.Arg(0))
+		log.Fatalf("%s not found", flags.Arg(0))
 	}
 	if *document {
 		must(html.Render(w, wrap(out)))
@@ -71,6 +68,14 @@ func main() {
 		fmt.Fprintln(w, "")
 	}
 
+}
+
+func init() {
+	log.SetFlags(0)
+}
+
+func main() {
+	Main(os.Args, os.Stdin, os.Stdout)
 }
 
 func must(err error) {
