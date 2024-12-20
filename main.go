@@ -23,6 +23,8 @@ func Main(args []string, stdin io.Reader, stdout io.Writer) {
   -o <output>  write to this file instead of standard output
   <tag>        tag (optionally with attributes) at the root of the fragment to extract
   <input>      input HTML file
+
+Synopsis: frag extracts document fragments from complete HTML documents.
 `)
 	}
 	flags.Parse(args[1:])

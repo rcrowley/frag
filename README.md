@@ -7,7 +7,7 @@ Installation
 ------------
 
 ```sh
-go get github.com/rcrowley/frag
+go install github.com/rcrowley/frag
 ```
 
 Usage
