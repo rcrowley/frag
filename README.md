@@ -1,13 +1,13 @@
 Frag
 ====
 
-TODO
+Extract fragments of HTML documents.
 
 Installation
 ------------
 
 ```sh
-go install github.com/rcrowley/frag
+go install github.com/rcrowley/frag@latest
 ```
 
 Usage
@@ -30,4 +30,5 @@ Frag is part of the [Mergician](https://github.com/rcrowley/mergician) suite of 
 
 * [Deadlinks](https://github.com/rcrowley/deadlinks): Scan a document root directory for dead links
 * [Electrostatic](https://github.com/rcrowley/electrostatic): Mergician-powered, pure-HTML CMS
+* [Feed](https://github.com/rcrowley/feed): Scan a document root directory to construct an Atom feed
 * [Sitesearch](https://github.com/rcrowley/sitesearch): Index a document root directory and serve queries to it in AWS Lambda
