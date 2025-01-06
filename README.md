@@ -3,6 +3,36 @@ Frag
 
 Extract fragments of HTML documents.
 
+For example, given this `test.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hello, world!</title>
+</head>
+<body>
+<article>
+<h1>Hello, world!</h1>
+<p>Lovely day for a test, isn&rsquo;t it?</p>
+</article>
+</body>
+</html>
+```
+
+And this use of Frag:
+
+```sh
+frag '<h1>' test.html
+```
+
+You get this fragment of the HTML document:
+
+```
+<h1>Hello, world!</h1>
+```
+
 Installation
 ------------
 
