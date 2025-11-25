@@ -51,7 +51,7 @@ frag [-d|-i] [-o <output>] <tag> <input>
 * `-i`: unwrap the fragment to leave only its inner HTML
 * `-o <output>`: write to this file instead of standard output
 * `<tag>`: tag (optionally with attributes) at the root of the fragment to extract
-* `<input>`: input HTML file
+* `<input>`: input HTML document
 
 See also
 --------

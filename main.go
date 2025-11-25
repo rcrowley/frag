@@ -22,7 +22,7 @@ func Main(args []string, stdin io.Reader, stdout io.Writer) {
   -i           unwrap the fragment to leave only its inner HTML
   -o <output>  write to this file instead of standard output
   <tag>        tag (optionally with attributes) at the root of the fragment to extract
-  <input>      input HTML file
+  <input>      input HTML document
 
 Synopsis: frag extracts document fragments from complete HTML documents.
 `)
